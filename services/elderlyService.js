@@ -75,21 +75,21 @@ if (minAge !== undefined && minAge !== '') {
     };
   }
 // 新增老人
-async function createElderly(name, gender, age) {
+async function createElderly(name, gender, age, id_card, phone) {
     const [result] = await db.query(
-      'INSERT INTO elderly (name, gender, age) VALUES (?, ?, ?)',
-      [name, gender, age]
+      'INSERT INTO elderly (name, gender, age, id_card, phone) VALUES (?, ?, ?,?,?)',
+      [name, gender, age, id_card, phone]
     );
   
     return result;
   }
 
 // 修改老人信息
-async function updateElderly(id, name, gender, age) {
+async function updateElderly(id, name, gender, age, id_card, phone) {
     // UPDATE（更新数据库中的数据）
     const [result] = await db.query(
-      'UPDATE elderly SET name = ?, gender = ?, age = ? WHERE id = ?',
-      [name, gender, age, id]
+      'UPDATE elderly SET name = ?, gender = ?, age = ?, id_card = ?, phone = ? WHERE id = ?',
+      [name, gender, age, id_card, phone, id]
     );
   
     return result;

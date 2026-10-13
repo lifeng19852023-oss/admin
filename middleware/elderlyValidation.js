@@ -2,7 +2,7 @@
 function validateElderly(req, res, next) {
 
     // req.body（获取前端提交的数据）
-    const { name, gender, age } = req.body;
+    const { name, gender, age, id_card, phone } = req.body;
   
     // 检查姓名
     if (!name || name.trim() === '') {
@@ -34,6 +34,18 @@ function validateElderly(req, res, next) {
         code: 400,
         message: '年龄必须在0到120之间'
       });
+    }
+    if(!id_card){
+      return res.status(400).json({
+        code:400,
+        message:'身份证不能为空'
+      })
+    }
+    if(!phone){
+      return res.status(400).json({
+        code:400,
+        message:'手机号不能为空'
+      })
     }
   
     // next（继续执行后面的处理）

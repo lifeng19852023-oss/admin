@@ -53,13 +53,15 @@ async function getElderlyList(req, res) {
 // 新增老人
 async function createElderly(req, res) {
      // req.body（获取前端发送过来的数据）
-     const { name, gender, age } = req.body;
+     const { name, gender, age, id_card, phone } = req.body;
 
      // 调用 Service（业务服务）
      const result = await elderlyService.createElderly(
        name,
        gender,
-       age
+       age,
+       id_card,
+       phone
      );
  
      // 返回新增成功
@@ -70,7 +72,9 @@ async function createElderly(req, res) {
          id: result.insertId,
          name,
          gender,
-         age
+         age,
+         id_card,
+         phone
        }
      });
   }
@@ -82,14 +86,16 @@ async function updateElderly(req, res) {
       const { id } = req.params;
   
       // req.body（获取请求正文中的数据）
-      const { name, gender, age } = req.body;
+      const { name, gender, age, id_card, phone } = req.body;
   
       // 调用 Service（业务服务）
       const result = await elderlyService.updateElderly(
         id,
         name,
         gender,
-        age
+        age,
+        id_card,
+        phone
       );
   
       // affectedRows（实际被修改的行数）
