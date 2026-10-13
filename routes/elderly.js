@@ -1,6 +1,5 @@
 const express = require('express')
 const router = express.Router()
-
 const elderlyController = require('../controllers/elderlyController')
 const validateElderly = require('../middleware/elderlyValidation')
 const asyncHandler = require('../middleware/asyncHandler')
