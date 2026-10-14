@@ -25,6 +25,7 @@ function errorHandler(err, req, res, next) {
     statusCode = 500
     message = '服务器内部错误'
   }
+  console.error('[API ERROR]', err.stack || err)
 
   res.status(statusCode).json({
     code: statusCode,

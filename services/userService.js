@@ -7,13 +7,16 @@ async function login(username, password) {
   if (typeof username !== 'string' || typeof password !== 'string' || !username || !password) return null
 
   const [rows] = await db.query(
-    'SELECT id, username, password FROM users WHERE username = ?',
+    'SELECT id, username, password, status FROM users WHERE username = ?',
     [username]
   )
   if (rows.length === 0) return null
 
   const user = rows[0]
   let passwordMatched = false
+  // 禁用账号不允许登录
+  if (user.status !== 'active') return null
+
 
   if (typeof user.password === 'string' && /^\$2[aby]\$\d{2}\$/.test(user.password)) {
     passwordMatched = await bcrypt.compare(password, user.password)
@@ -47,7 +50,14 @@ async function getUserRole(userId) {
   )
   return rows.length ? rows[0].code : null
 }
-
+// 查询用户账号状态
+async function getUserStatus(userId) {
+  const [rows] = await db.query(
+    'SELECT status FROM users WHERE id = ?',
+    [userId]
+  )
+  return rows.length ? rows[0].status : null
+}
 // 查询用户权限
 async function getUserPermissions(userId) {
   const [rows] = await db.query(
@@ -159,5 +169,6 @@ module.exports = {
   createUser,
   deleteUser,
   updateUserRole,
-  countUsersByRole
+  countUsersByRole,
+  getUserStatus
 }
